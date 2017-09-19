@@ -12,12 +12,18 @@ for( let row=0; row<rowSize; row++ ){
         let td = document.createElement('td');
             td.setAttribute('class','square');
             td.setAttribute('id',row+'-'+col);
+            td.setAttribute('onclick','showDiv(this)');
+        //el div que ocultara el contenido de la tabla
         let divTd = document.createElement('div');
             divTd.setAttribute('class','hidde-td');
+        let countTd = document.createElement('div');
+            countTd.setAttribute('class','count');
+            countTd.setAttribute('id',row+'--'+col);
         grid[row][col] = {
             hasBomb: false, 
             bombCount: 0
         };
+        td.appendChild(countTd);
         td.appendChild(divTd);
         tr.appendChild(td);
     }
@@ -41,7 +47,7 @@ for (var i = 0; i < rowSize; i++) {
     for (var j = 0; j < rowSize; j++) {
         if ( (grid[i][j]).hasBomb ) {
             console.log(i +'-'+ j)
-            $(`#${i}-${j}`).addClass('bombHere');
+            $(`#${i}--${j}`).addClass('bombHere');
         }
     }
 }
@@ -112,7 +118,7 @@ for (var i = 0; i < rowSize; i++) {
         let number = grid[i][j].bombCount;
         let hasBombHere = grid[i][j].hasBomb;
         if (number>0 && !hasBombHere){
-            $(`#${i}-${j}`).text(number);
+            $(`#${i}--${j}`).text(number);
         }
     }
 }

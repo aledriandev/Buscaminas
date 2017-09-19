@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
 *{
     margin: 0 auto;
     padding: 0;
@@ -11,18 +13,37 @@ body {
 td{
     width: 50px;
     height: 50px;
-    background-color: #A9AEF7;
     border-radius: 1px;
     position: relative;
-  }
+    text-align: center;
+    font-family: 'Fjalla One';
+    font-size: 120%;
+    background-color: #acdce6;
+}
   
 table{
     border-collapse: separate;
     border-spacing: 3px;
 }
 
+.count{
+    background-color: #A9AEF7;
+    width: 100%;
+    height: 100%; 
+    display: none;
+}
+
 .bombHere{
     background-image: url('../img/bomb.png');
-    background-color: #E8F897;
+    background-color: #F8F697;
     background-size: cover;
+}
+
+.hide-all{
+    background-color: #acdce6;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1111;
 }
