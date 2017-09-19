@@ -1,0 +1,26 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #FAE4D8;
+}
+
+td{
+    width: 20px;
+    height: 20px;
+    background-color: #A9AEF7;
+    border-radius: 1px;
+    position: relative;
+  }
+  
+table{
+    border-collapse: separate;
+    border-spacing: 3px;
+}
+
+.bomb{
+    background-color: #A9E5F7;
+}
