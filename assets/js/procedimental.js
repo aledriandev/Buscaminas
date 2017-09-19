@@ -134,6 +134,7 @@ function showDiv(e){
         $(`#${x}--${y}`).addClass('error');
         showSolution();
         removeClick();
+        alert('Esto ha explotado');
     }
     console.log(e.getAttribute('id'));
     e.remove();
