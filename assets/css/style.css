@@ -30,7 +30,6 @@ table{
     background-color: #A9AEF7;
     width: 100%;
     height: 100%; 
-    display: none;
 }
 
 .bombHere{
@@ -39,11 +38,15 @@ table{
     background-size: cover;
 }
 
-.hide-all{
+.hidde-td{
     background-color: #acdce6;
     position: absolute;
     top: 0;
     width: 100%;
     height: 100%;
-    z-index: 1111;
+    z-index: 11;
+}
+
+.error{
+    background-color: #A5FC54;
 }
