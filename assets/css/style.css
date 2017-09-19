@@ -21,10 +21,8 @@ table{
     border-spacing: 3px;
 }
 
-.bomb{
-    background-color: #A9E5F7;
-}
-
 .bombHere{
-    background-color: red;
+    background-image: url('../img/bomb.png');
+    background-color: #E8F897;
+    background-size: cover;
 }
