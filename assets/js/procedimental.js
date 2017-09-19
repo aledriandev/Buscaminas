@@ -11,19 +11,20 @@ for( let row=0; row<rowSize; row++ ){
     for( let col=0; col<rowSize; col++ ){
         let td = document.createElement('td');
             td.setAttribute('class','square');
-            td.setAttribute('id',row+'-'+col);
-            td.setAttribute('onclick','showDiv(this)');
-        //el div que ocultara el contenido de la tabla
+            td.setAttribute('id',row+'*'+col);
+            //el div que ocultara el contenido de la tabla
         let divTd = document.createElement('div');
             divTd.setAttribute('class','hidde-td');
-        let countTd = document.createElement('div');
-            countTd.setAttribute('class','count');
-            countTd.setAttribute('id',row+'--'+col);
+            divTd.setAttribute('onclick','showDiv(this)');
+            divTd.setAttribute('id',row+'-'+col);
+        let contentTd = document.createElement('div');
+            contentTd.setAttribute('class','count');
+            contentTd.setAttribute('id',row+'--'+col);
         grid[row][col] = {
             hasBomb: false, 
             bombCount: 0
         };
-        td.appendChild(countTd);
+        td.appendChild(contentTd);
         td.appendChild(divTd);
         tr.appendChild(td);
     }
@@ -124,7 +125,40 @@ for (var i = 0; i < rowSize; i++) {
 }
 
 function showDiv(e){
-    e.target.appendChild
+    let idEvent = e.getAttribute('id').split('-');
+    console.log(idEvent)
+    let x = parseInt(idEvent[0]);
+    let y = parseInt(idEvent[1]);
+
+    if(grid[x][y].hasBomb){
+        $(`#${x}--${y}`).addClass('error');
+        showSolution();
+        removeClick();
+    }
+    console.log(e.getAttribute('id'));
+    e.remove();
+    
+}
+
+function showSolution () {
+    for (var i = 0; i < rowSize; i++) {
+        for (var j = 0; j < rowSize; j++) {
+            if ( (grid[i][j]).hasBomb ) {
+                console.log(i +'-'+ j)
+                $(`#${i}-${j}`).remove();
+            }
+        }
+    }
+}
+
+function removeClick () {
+    for (var i = 0; i < rowSize; i++) {
+        for (var j = 0; j < rowSize; j++) {
+            if ( !(grid[i][j]).hasBomb ) {
+                document.getElementById(i +'-'+ j).removeEventListener("onclick", showDiv);
+            }
+        }
+    }
 }
 
 function numRandom(min, max) {

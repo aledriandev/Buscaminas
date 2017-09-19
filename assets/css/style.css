@@ -46,3 +46,7 @@ table{
     height: 100%;
     z-index: 11;
 }
+
+.error{
+    background-color: #A5FC54;
+}
