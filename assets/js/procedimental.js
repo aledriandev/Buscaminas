@@ -134,6 +134,7 @@ function showDiv(e){
         $(`#${x}--${y}`).addClass('error');
         showSolution();
         removeClick();
+        alert('Esto ha explotado');
     }
     console.log(e.getAttribute('id'));
     e.remove();
@@ -160,6 +161,13 @@ function removeClick () {
         }
     }
 }
+
+$("html").click(function() {
+    alert("Sigue jugando");
+});
+$('#tableMines').click(function (e) {
+    e.stopPropagation();
+});
 
 function numRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
