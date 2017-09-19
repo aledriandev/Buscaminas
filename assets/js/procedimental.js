@@ -123,6 +123,10 @@ for (var i = 0; i < rowSize; i++) {
     }
 }
 
+function showDiv(e){
+    e.target.appendChild
+}
+
 function numRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
