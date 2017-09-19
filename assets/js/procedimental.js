@@ -161,6 +161,13 @@ function removeClick () {
     }
 }
 
+$("html").click(function() {
+    alert("Sigue jugando");
+});
+$('#tableMines').click(function (e) {
+    e.stopPropagation();
+});
+
 function numRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
