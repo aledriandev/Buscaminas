@@ -53,65 +53,25 @@ for (var i = 0; i < rowSize; i++) {
     }
 }
 
-//colocar los numeros
-for (var i = 0; i < rowSize; i++) {
-    for (var j = 0; j < rowSize; j++) {
-        if ( (grid[i][j]).hasBomb ) {
-            if( i==0 && j==0){//primera esquina
-                grid[i  ][j+1].bombCount++;
-                grid[i+1][j  ].bombCount++;
-                grid[i+1][j+1].bombCount++;
-            } else if( i==0 && j==6){//segunda esquina
-                grid[i  ][j-1].bombCount++;
-                grid[i+1][j-1].bombCount++;
-                grid[i+1][j  ].bombCount++;
-            } else if( i==6 && j==0){//tercera esquina
-                grid[i  ][j+1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-                grid[i-1][j+1].bombCount++;
-            } else if( i==6 && j==6){//cuarta esquina
-                grid[i  ][j-1].bombCount++;
-                grid[i-1][j-1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-            } else if( i==0 && (j!=0 || j!=6 )){ //lateral i==0
-                grid[i+1][j-1].bombCount++;
-                grid[i+1][j  ].bombCount++;
-                grid[i+1][j+1].bombCount++;
-                grid[i  ][j-1].bombCount++;
-                grid[i  ][j+1].bombCount++;
-            } else if( i==6 && (j!=0 || j!=6 )){ //lateral 6==0
-                grid[i-1][j-1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-                grid[i-1][j+1].bombCount++;
-                grid[i  ][j-1].bombCount++;
-                grid[i  ][j+1].bombCount++;
-            } else if(j==0 && (i!=0 || i!=6 ) ){ //lateral j==0
-                grid[i  ][j+1].bombCount++;
-                grid[i-1][j+1].bombCount++;
-                grid[i+1][j+1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-                grid[i+1][j  ].bombCount++;
-            } else if(j==6 && (i!=0 || i!=6 ) ){ //lateral j==0
-                grid[i  ][j-1].bombCount++;
-                grid[i-1][j-1].bombCount++;
-                grid[i+1][j-1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-                grid[i+1][j  ].bombCount++;
-            }
-            else{
-                console.log(i +'-'+ j)
-                // $(`#${i}-${j}`).addClass('bombHere');
-                grid[i-1][j-1].bombCount++;
-                grid[i-1][j  ].bombCount++;
-                grid[i-1][j+1].bombCount++;
-                grid[i  ][j-1].bombCount++;
-                grid[i  ][j+1].bombCount++;
-                grid[i+1][j-1].bombCount++;
-                grid[i+1][j  ].bombCount++;
-                grid[i+1][j+1].bombCount++;
+//deberia funcionar
+const mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
+const mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
+
+for (let x = 0; x < rowSize; x++) {
+    for (let y = 0; y < rowSize; y++) {
+        for (let index = 0; index < mov_x.length; index++) {
+            let i = x + mov_x[index];
+            let j = y + mov_y[index];   
+            if (check (i, j, 7)&&(grid[x][y]).hasBomb) {
+                grid[i][j].bombCount++
             }
         }
     }
+}
+function check (i, j, n) {
+    if (  i >= 0 && j >= 0 && i < n && j < n)
+      return true;
+    return false;   
 }
 
 for (var i = 0; i < rowSize; i++) {
