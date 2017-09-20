@@ -179,18 +179,23 @@ function numRandom(min, max) {
 
 
 // //deberia funcionar
-// var mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
-// var mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
+// let mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
+// let mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
 
-// for (var x = 0; x < rowSize; i++) {
-//     for (var y = 0; y < rowSize; j++) {
-//         for (var index = 0; index < mov_x.length; index++) {
-//             var i = x + mov_x[index];
-//             var j = y + mov_y[index];   
-//             if (check (i, j, 6)&&(grid[x][y]).hasBomb) {
+// for (let x = 0; x < rowSize; i++) {
+//     for (let y = 0; y < rowSize; j++) {
+//         for (let index = 0; index < mov_x.length; index++) {
+//             let i = x + mov_x[index];
+//             let j = y + mov_y[index];   
+//             if (check (i, j, 7)&&(grid[x][y]).hasBomb) {
 //                 grid[i][j].bombCount++
 //             }
 //         }
 //     }
+// }
+// function check (i, j, n) {
+//     if (  i >= 0 && j >= 0 && i < n && j < n)
+//       return true;
+//     return false;   
 // }
 
