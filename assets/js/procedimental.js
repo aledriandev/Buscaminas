@@ -155,8 +155,10 @@ function showSolution () {
 function removeClick () {
     for (var i = 0; i < rowSize; i++) {
         for (var j = 0; j < rowSize; j++) {
-            if ( !(grid[i][j]).hasBomb ) {
-                document.getElementById(i +'-'+ j).removeEventListener("onclick", showDiv);
+            console.log($(`#${i}-${j}`).length)
+            console.log(document.getElementById(i +'-'+ j))
+            if ( !(grid[i][j]).hasBomb && $(`#${i}-${j}`).length!=0 ) {
+                document.getElementById(i +'-'+ j).setAttribute("onclick", 'nada');
             }
         }
     }
@@ -169,6 +171,26 @@ $('#tableMines').click(function (e) {
     e.stopPropagation();
 });
 
+function nada () {}
+
 function numRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
+
+
+// //deberia funcionar
+// var mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
+// var mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
+
+// for (var x = 0; x < rowSize; i++) {
+//     for (var y = 0; y < rowSize; j++) {
+//         for (var index = 0; index < mov_x.length; index++) {
+//             var i = x + mov_x[index];
+//             var j = y + mov_y[index];   
+//             if (check (i, j, 6)&&(grid[x][y]).hasBomb) {
+//                 grid[i][j].bombCount++
+//             }
+//         }
+//     }
+// }
+
