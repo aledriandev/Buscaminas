@@ -117,11 +117,21 @@ function showClean (x,y) {
         let i = x + mov_x[index];
         let j = y + mov_y[index];   
         if (check (i, j, 7)) {
-            $(`#${i}-${j}`).remove();
+            // $(`#${i}-${j}`).remove();
+            // if (grid[i][j].bombCount > 0 && $(`#${i}-${j}`).length) {
+            //     x = i;
+            //     y = j;
+            //     $(`#${x}-${y}`).remove();
+            // }
             if (grid[i][j].bombCount == 0 && $(`#${i}-${j}`).length) {
-                // $(`#${i}-${j}`).remove();
                 x = i;
                 y = j;
+                $(`#${x}-${y}`).remove();
+                // x1 = x+1;
+                // y1 = y+1;
+                // if ($(`#${x1}-${y1}`).length){
+                //     $(`#${x1}-${y1}`).remove();
+                // }
                 showClean(x,y);
             }
             
@@ -165,26 +175,3 @@ function nada () {}
 function numRandom(min, max) {
     return Math.round(Math.random() * (max - min) + min);
 }
-
-
-// //deberia funcionar
-// let mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
-// let mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
-
-// for (let x = 0; x < rowSize; i++) {
-//     for (let y = 0; y < rowSize; j++) {
-//         for (let index = 0; index < mov_x.length; index++) {
-//             let i = x + mov_x[index];
-//             let j = y + mov_y[index];   
-//             if (check (i, j, 7)&&(grid[x][y]).hasBomb) {
-//                 grid[i][j].bombCount++
-//             }
-//         }
-//     }
-// }
-// function check (i, j, n) {
-//     if (  i >= 0 && j >= 0 && i < n && j < n)
-//       return true;
-//     return false;   
-// }
-
