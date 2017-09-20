@@ -118,6 +118,13 @@ function showClean (x,y) {
         let j = y + mov_y[index];   
         if (check (i, j, 7)) {
             $(`#${i}-${j}`).remove();
+            if (grid[i][j].bombCount == 0 && $(`#${i}-${j}`).length) {
+                // $(`#${i}-${j}`).remove();
+                x = i;
+                y = j;
+                showClean(x,y);
+            }
+            
         }
     }
 }
