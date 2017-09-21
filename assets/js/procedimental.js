@@ -117,24 +117,16 @@ function showClean (x,y) {
         let i = x + mov_x[index];
         let j = y + mov_y[index];   
         if (check (i, j, 7)) {
-            // $(`#${i}-${j}`).remove();
-            // if (grid[i][j].bombCount > 0 && $(`#${i}-${j}`).length) {
-            //     x = i;
-            //     y = j;
-            //     $(`#${x}-${y}`).remove();
-            // }
-            if (grid[i][j].bombCount == 0 && $(`#${i}-${j}`).length) {
+            if ((grid[i][j].bombCount == 0) && $(`#${i}-${j}`).length && !grid[i][j].hasBomb) {
                 x = i;
                 y = j;
                 $(`#${x}-${y}`).remove();
-                // x1 = x+1;
-                // y1 = y+1;
-                // if ($(`#${x1}-${y1}`).length){
-                //     $(`#${x1}-${y1}`).remove();
-                // }
+
                 showClean(x,y);
             }
-            
+            if(grid[i][j].bombCount > 0 && !grid[i][j].hasBomb){
+                $(`#${i}-${j}`).remove();
+            }  
         }
     }
 }
