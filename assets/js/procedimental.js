@@ -131,8 +131,6 @@ function showClean (x,y) {
     }
 }
 
-
-
 function showSolution () {
     for (var i = 0; i < rowSize; i++) {
         for (var j = 0; j < rowSize; j++) {
