@@ -1,33 +1,36 @@
 'use strict';
 
-let bombs;
-const rowSize = 7; // tamaño de la tabla
+let bombs = 10;
+const rowSize = 10; // tamaño de la tabla
+const colSize = 10; // tamaño de la tabla
 let grid;
 // Cotruccion de tabla
-let tableMines = $('#tableMines');
+let tableMines = document.getElementById("tableMines");
 newTable();
-function newTable () {
-    $('#tableMines').html('');
-    bombs = 10;
+
+function newTable() {
+    tableMines.innerHTML = "";
+    //bombs = 10;
     grid = [];
-    for( let row=0; row<rowSize; row++ ){
+    for (let row = 0; row < rowSize; row++) {
         let tr = document.createElement('tr');
         grid[row] = [];
-        for( let col=0; col<rowSize; col++ ){
+        for (let col = 0; col < colSize; col++) {
             let td = document.createElement('td');
-                td.setAttribute('class','square');
-                td.setAttribute('id',row+'*'+col);
-                //el div que ocultara el contenido de la tabla
+            td.setAttribute('class', 'square');
+            td.setAttribute('id', row + '*' + col);
+            //el div que ocultara el contenido de la tabla
             let divTd = document.createElement('div');
-                divTd.setAttribute('class','hidde-td');
-                divTd.setAttribute('onclick','showDiv(this)');
-                divTd.setAttribute('id',row+'-'+col);
+            divTd.setAttribute('class', 'hidde-td');
+            divTd.setAttribute('onclick', 'showDiv(this)');
+            divTd.setAttribute('id', row + '-' + col);
             let contentTd = document.createElement('div');
-                contentTd.setAttribute('class','count');
-                contentTd.setAttribute('id',row+'--'+col);
+            contentTd.setAttribute('class', 'content');
+            contentTd.setAttribute('id', row + '--' + col);
             grid[row][col] = {
-                hasBomb: false, 
-                bombCount: 0
+                hasBomb: false,
+                bombCount: 0,
+                flag: false
             };
             td.appendChild(contentTd);
             td.appendChild(divTd);
@@ -35,133 +38,137 @@ function newTable () {
         }
         tableMines.append(tr);
     }
-    
-    while(bombs> 0){
-        let x = Math.floor(Math.random()*6)
-        let y = Math.floor(Math.random()*6)
-        // console.log(x);
-        // console.log(y);
-        if ( !(grid[x][y]).hasBomb ) {
-            (grid[x][y]).hasBomb = true;
-            console.log(grid[x][y]);
-            bombs--;
-            console.log(bombs);
-        }
-    }
     //colocar las bombas
-    for (var i = 0; i < rowSize; i++) {
-        for (var j = 0; j < rowSize; j++) {
-            if ( (grid[i][j]).hasBomb ) {
-                console.log(i +'-'+ j)
-                $(`#${i}--${j}`).addClass('bombHere');
-            }
+    while (bombs > 0) {
+        let x = random(0, rowSize);
+        let y = random(0, colSize);
+        // console.log("x------", x);
+        // console.log("y------", y);
+        if (!(grid[x][y]).hasBomb) {
+            (grid[x][y]).hasBomb = true;
+            console.log("grid[x][y]", "grid[" + x + "][" + y + "]");
+            bombs--;
+            //console.log(bombs);
+            document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content');
         }
     }
-    
-    //deberia funcionar colocar numeros
-    const mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
-    const mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
-    
+
+
+    //Contar valores
+    //posiciones de las bombas
+    const sq_x = [-1, -1, -1, +0, +0, +1, +1, +1];
+    const sq_y = [-1, +0, +1, -1, +1, -1, +0, +1];
+
     for (let x = 0; x < rowSize; x++) {
-        for (let y = 0; y < rowSize; y++) {
-            for (let index = 0; index < mov_x.length; index++) {
-                let i = x + mov_x[index];
-                let j = y + mov_y[index];   
-                if (check (i, j, 7)&&(grid[x][y]).hasBomb) {
-                    grid[i][j].bombCount++
+        for (let y = 0; y < colSize; y++) {
+            if (!grid[x][y].hasBomb) {
+                for (let index = 0; index < sq_x.length; index++) {
+                    let i = x + sq_x[index];
+                    let j = y + sq_y[index];
+                    if (check(i, j, rowSize, colSize) && (grid[i][j]).hasBomb) {
+                        grid[x][y].bombCount++
+                    }
+                }
+                let number = grid[x][y].bombCount;
+                if (number > 0) {
+                    //document.getElementById(`${x}--${y}`).innerHTML = number;
                 }
             }
         }
     }
-  
-    for (var i = 0; i < rowSize; i++) {
-        for (var j = 0; j < rowSize; j++) {
-            let number = grid[i][j].bombCount;
-            let hasBombHere = grid[i][j].hasBomb;
-            if (number>0 && !hasBombHere){
-                $(`#${i}--${j}`).text(number);
-            }
+
+    for (let x = 0; x < rowSize; x++) {
+        for (let y = 0; y < colSize; y++) {
+            console.log("grid[x][y]", "grid[" + x + "][" + y + "]");
+            console.log("grid[x][y]", grid[x][y]);
+        }
+    }
+
+}
+
+function showAll() {
+    for (let x = 0; x < rowSize; x++) {
+        for (let y = 0; y < colSize; y++) {
+            document.getElementById(`${x}-${y}`).remove();
         }
     }
 }
 
-function check (i, j, n) {
-    if (  i >= 0 && j >= 0 && i < n && j < n)
-      return true;
-    return false;   
+//showAll()
+
+function random(min, max) {
+    return Math.floor(Math.random() * (max - min)) + min;
 }
 
-function showDiv(e){
+function check(i, j, n, m) {
+    if (i >= 0 && j >= 0 && i < n && j < m)
+        return true;
+    return false;
+}
+
+function showDiv(e) {
     let idEvent = e.getAttribute('id').split('-');
     console.log(idEvent)
     let x = parseInt(idEvent[0]);
     let y = parseInt(idEvent[1]);
 
-    if(grid[x][y].hasBomb){
-        $(`#${x}--${y}`).addClass('error');
+    if (grid[x][y].hasBomb) {
+        document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content error');
         showSolution();
-        removeClick();
+        document.getElementById(x + '*' + y).removeAttribute('onclick');
         alert('Esto ha explotado');
-    } else if (grid[x][y].bombCount==0){
-        showClean(x,y)
+    } else if (grid[x][y].bombCount == 0) {
+        bombaNotFound(x, y);
+        // document.getElementById(`${x}-${y}`).remove();
+    } else {
+        document.getElementById(`${x}--${y}`).innerHTML = grid[x][y].bombCount;
     }
     console.log(e.getAttribute('id'));
     e.remove();
-    
+
 }
 
-function showClean (x,y) {
-    const mov_x = [-1, -1, -1, +0, +0, +1, +1, +1];
-    const mov_y = [-1, +0, +1, -1, +1, -1, +0, +1];    
-    for (let index = 0; index < mov_x.length; index++) {
-        let i = x + mov_x[index];
-        let j = y + mov_y[index];   
-        if (check (i, j, 7)) {
-            if ((grid[i][j].bombCount == 0) && $(`#${i}-${j}`).length && !grid[i][j].hasBomb) {
-                x = i;
-                y = j;
-                $(`#${x}-${y}`).remove();
 
-                showClean(x,y);
+const sq_x = [-1, -1, -1, +0, +0, +1, +1, +1];
+const sq_y = [-1, +0, +1, -1, +1, -1, +0, +1];
+
+function bombaNotFound(x, y) {
+    console.log("x,y", x + "," + y)
+    if (!grid[x][y].hasBomb && document.getElementById(`${x}-${y}`)) {
+        document.getElementById(`${x}-${y}`).remove();
+
+    }
+    for (let index = 0; index < sq_x.length; index++) {
+        let i = x + sq_x[index];
+        let j = y + sq_y[index];
+        if (document.getElementById(`${i}-${j}`) && check(i, j, rowSize, colSize) && !grid[i][j].hasBomb) {
+            if (grid[i][j].bombCount === 0) {
+                bombaNotFound(i, j)
+            } else {
+                document.getElementById(`${i}-${j}`).remove();
+                document.getElementById(`${i}--${j}`).innerHTML = grid[i][j].bombCount;
             }
-            if(grid[i][j].bombCount > 0 && !grid[i][j].hasBomb){
-                $(`#${i}-${j}`).remove();
-            }  
         }
     }
+
 }
 
-function showSolution () {
+function showSolution() {
     for (var i = 0; i < rowSize; i++) {
-        for (var j = 0; j < rowSize; j++) {
-            if ( (grid[i][j]).hasBomb ) {
-                console.log(i +'-'+ j)
-                $(`#${i}-${j}`).remove();
+        for (var j = 0; j < colSize; j++) {
+            if ((grid[i][j]).hasBomb) {
+                //console.log(i + '-' + j)
+                document.getElementById(`${i}-${j}`).remove();
             }
         }
     }
 }
 
-function removeClick () {
-    for (var i = 0; i < rowSize; i++) {
-        for (var j = 0; j < rowSize; j++) {
-            // console.log($(`#${i}-${j}`).length)
-            if ( !(grid[i][j]).hasBomb && $(`#${i}-${j}`).length!=0 ) {
-                document.getElementById(i +'-'+ j).setAttribute("onclick", 'nada');
-            }
-        }
-    }
-}
+function removeClick(x, y) {}
 
-$("html").click(function() {
-    alert("Sigue jugando");
-});
-$('#game').click(function (e) {
+// $("html").click(function() {
+//     alert("Sigue jugando");
+// });
+document.getElementById('game').click(function(e) {
     e.stopPropagation();
 });
-
-function nada () {}
-
-function numRandom(min, max) {
-    return Math.round(Math.random() * (max - min) + min);
-}
