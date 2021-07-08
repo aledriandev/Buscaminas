@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Fjalla+One');
-
-*{
+* {
     margin: 0 auto;
     padding: 0;
     box-sizing: border-box;
@@ -10,7 +9,7 @@ body {
     background-color: #FAE4D8;
 }
 
-td{
+td {
     width: 50px;
     height: 50px;
     border-radius: 1px;
@@ -20,25 +19,32 @@ td{
     font-size: 120%;
     background-color: #acdce6;
 }
-  
-table{
+
+table {
     border-collapse: separate;
     border-spacing: 3px;
 }
 
-.count{
+.content {
     background-color: #A9AEF7;
     width: 100%;
-    height: 100%; 
+    height: 100%;
 }
 
-.bombHere{
+.bombHere {
     background-image: url('../img/bomb.png');
     background-color: #F8F697;
     background-size: cover;
 }
 
-.hidde-td{
+.flag {
+    background-image: url('../img/flag.png');
+    overflow: hidden;
+    background-size: cover;
+    background-position: center center;
+}
+
+.hidde-td {
     background-color: #acdce6;
     position: absolute;
     top: 0;
@@ -47,6 +53,6 @@ table{
     z-index: 11;
 }
 
-.error{
+.error {
     background-color: #A5FC54;
 }

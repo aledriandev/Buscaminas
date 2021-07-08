@@ -1,12 +1,24 @@
 'use strict';
 
 let bombs = 10;
-const rowSize = 10; // tamaño de la tabla
-const colSize = 10; // tamaño de la tabla
+let rowSize = 10; // tamaño de la tabla
+let colSize = 10; // tamaño de la tabla
 let grid;
+let flags;
 // Cotruccion de tabla
 let tableMines = document.getElementById("tableMines");
 newTable();
+
+function newGame() {
+    console.log("new")
+    bombs = 10;
+    rowSize = 10; // tamaño de la tabla
+    colSize = 10; // tamaño de la tabla
+    tableMines = document.getElementById("tableMines");
+    grid = [];
+    flags = [];
+    newTable();
+}
 
 function newTable() {
     tableMines.innerHTML = "";
@@ -22,7 +34,7 @@ function newTable() {
             //el div que ocultara el contenido de la tabla
             let divTd = document.createElement('div');
             divTd.setAttribute('class', 'hidde-td');
-            divTd.setAttribute('onclick', 'showDiv(this)');
+            divTd.onmousedown = function(e) { mouseAction(e) };
             divTd.setAttribute('id', row + '-' + col);
             let contentTd = document.createElement('div');
             contentTd.setAttribute('class', 'content');
@@ -49,7 +61,7 @@ function newTable() {
             console.log("grid[x][y]", "grid[" + x + "][" + y + "]");
             bombs--;
             //console.log(bombs);
-            document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content');
+            //document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content');
         }
     }
 
@@ -106,6 +118,14 @@ function check(i, j, n, m) {
     return false;
 }
 
+function mouseAction(e) {
+    if (e.buttons == 1) {
+        showDiv(e.target);
+    } else if (e.buttons == 2) {
+        showFlag(e.target);
+    }
+}
+
 function showDiv(e) {
     let idEvent = e.getAttribute('id').split('-');
     console.log(idEvent)
@@ -113,8 +133,8 @@ function showDiv(e) {
     let y = parseInt(idEvent[1]);
 
     if (grid[x][y].hasBomb) {
-        document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content error');
         showSolution();
+        document.getElementById(`${x}--${y}`).setAttribute('class', 'bombHere content error');
         document.getElementById(x + '*' + y).removeAttribute('onclick');
         alert('Esto ha explotado');
     } else if (grid[x][y].bombCount == 0) {
@@ -125,6 +145,15 @@ function showDiv(e) {
     }
     console.log(e.getAttribute('id'));
     e.remove();
+
+}
+
+function showFlag(e) {
+    let idEvent = e.getAttribute('id').split('-');
+    console.log(idEvent)
+    let x = parseInt(idEvent[0]);
+    let y = parseInt(idEvent[1]);
+    document.getElementById(x + '-' + y).setAttribute('class', 'hidde-td flag');
 
 }
 
@@ -158,6 +187,7 @@ function showSolution() {
         for (var j = 0; j < colSize; j++) {
             if ((grid[i][j]).hasBomb) {
                 //console.log(i + '-' + j)
+                document.getElementById(`${i}--${j}`).setAttribute('class', 'bombHere content');
                 document.getElementById(`${i}-${j}`).remove();
             }
         }
@@ -172,3 +202,5 @@ function removeClick(x, y) {}
 document.getElementById('game').click(function(e) {
     e.stopPropagation();
 });
+//ocultar menu por defecto
+document.addEventListener('contextmenu', event => event.preventDefault());
